@@ -18,12 +18,50 @@
   h1 { font-size: 1.35rem; font-weight: 800; color: #333; margin-bottom: 6px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
   .subtitle { font-size: 0.82rem; color: #888; margin-bottom: 36px; text-align: center; }
 
-  .wheel-container { position: relative; width: 620px; height: 620px; }
+  .wheel-container { position: relative; width: 620px; height: 620px; max-width: 100%; }
   svg.wheel { width: 100%; height: 100%; overflow: visible; }
   .segment-group { cursor: pointer; transition: filter 0.2s; }
   .segment-group:hover { filter: brightness(1.15) drop-shadow(0 4px 14px rgba(0,0,0,0.25)); }
   .segment-group.active-seg { filter: brightness(1.2) drop-shadow(0 4px 18px rgba(0,0,0,0.32)); }
   .outer-label { cursor: pointer; }
+
+  /* ===== RESPONSIVE MOBILE ===== */
+  @media (max-width: 768px) {
+    #view-wheel { padding: 20px 10px; }
+    h1 { font-size: 1.1rem; }
+    .subtitle { font-size: 0.75rem; margin-bottom: 20px; }
+    
+    .wheel-container { 
+      width: 100% !important; 
+      height: auto !important; 
+      aspect-ratio: 1; 
+      max-width: 400px; 
+    }
+    
+    .legend { 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 6px; 
+      margin-top: 20px; 
+      padding: 0 10px;
+    }
+    .legend-item { padding: 5px 7px; }
+    .legend-dot { width: 11px; height: 11px; }
+    .legend-label { font-size: 0.65rem; }
+  }
+
+  @media (max-width: 480px) {
+    #view-wheel { padding: 15px 5px; }
+    h1 { font-size: 1rem; }
+    .subtitle { font-size: 0.7rem; }
+    
+    .wheel-container { max-width: 340px; }
+    
+    .legend { 
+      grid-template-columns: 1fr; 
+      gap: 4px; 
+    }
+    .legend-label { font-size: 0.62rem; }
+  }
 
   .tooltip-tip {
     position: fixed; background: rgba(20,20,20,0.88); color: white;
@@ -431,26 +469,26 @@
 // ================================================================
 const DEMOGRAPHICS_DATA = {
   "Nombre d'enfants de moins de 18 ans": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [14.84,14.79,14.75,14.71,14.64,14.58],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [14.84, 14.79, 14.75, 14.71, 14.64, 14.58],
     unit: "millions",
     source: "INSEE, 2024"
   },
   "Taux de fécondité": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [1.86,1.82,1.83,1.79,1.66,1.62],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [1.86, 1.82, 1.83, 1.79, 1.66, 1.62],
     unit: "enfants/femme",
     source: "INSEE, 2024"
   },
   "Âge moyen à la maternité": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [30.7,30.8,30.9,31.0,31.1,31.2],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [30.7, 30.8, 30.9, 31, 31.1, 31.2],
     unit: "ans",
     source: "INSEE, 2024"
   },
   "Pourcentage de mères âgées de moins de 18 ans": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [0.34,0.32,0.30,0.28,0.26,0.25],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [0.3, 0.3, 0.3, 0.3, 0.3, 0.2],
     unit: "%",
     source: "INSEE, 2024",
     analysis: [
@@ -477,20 +515,20 @@ const DEMOGRAPHICS_DATA = {
     ]
   },
   "Part des familles monoparentales": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [23.4,23.8,24.7,25.1,25.9,26.5],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [23.4, 23.8, 24.7, 25.1, 25.9, 26.5],
     unit: "%",
     source: "INSEE, 2024"
   },
   "Nombre de naissances vivantes domiciliées en France": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [753383,735196,742052,726047,677800,648000],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [753383, 735196, 742052, 726047, 677800, 648000],
     unit: "naissances",
     source: "INSEE, 2024"
   },
   "Taux de natalité en Hexagone": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [10.7,10.5,10.6,10.3,9.6,9.2],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [10.7, 10.5, 10.6, 10.3, 9.6, 9.2],
     unit: "‰",
     source: "INSEE, 2024"
   },
@@ -510,13 +548,13 @@ const DEMOGRAPHICS_DATA = {
 
 const EDUCATION_DATA = {
   "Dépense annuelle par élève": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [9440,9470,10470,10930,11580,12050],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [9440, 9470, 10470, 10930, 11580, 12050],
     unit: "€", source: "DEPP / MEN, 2024"
   },
   "Taux de NEET 15-19 ans (national)": {
-    years: [2019,2021,2024],
-    values: [5.7,6.0,5.8],
+    years: ["2015-2019 (Moyenne)", 2021, "2023-2024"],
+    values: [5.7, 6.0, 5.8],
     unit: "%", source: "INSEE / Eurostat, 2024"
   },
   "Taux de NEET 15-19 ans (La Réunion)": {
@@ -535,25 +573,25 @@ const EDUCATION_DATA = {
     unit: "%", source: "INSEE / Eurostat, 2024"
   },
   "Élèves de REP+ sous le niveau attendu": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [50.2,54.8,52.1,51.4,51.8,52.7],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [50.2, 54.8, 52.1, 51.4, 51.8, 52.7],
     unit: "%", source: "DEPP, 2024"
   },
   "Part de jeunes en difficultés de lecture": {
-    years: [2019,2020,2021,2022,2023,2024],
-    values: [11.8,12.1,12.9,12.5,11.2,13.0],
+    years: [2019, 2020, 2021, 2022, 2023, 2024],
+    values: [11.8, 12.1, 12.9, 12.5, 11.2, 13.0],
     unit: "%", source: "DEPP / JDC, 2024"
   },
   "Écart de performance socio-économique": {
-    years: [2012,2015,2018,2022],
-    values: [22.5,20.0,17.5,17.1],
+    years: [2012, 2015, 2018, 2022],
+    values: [22.5, 20.0, 17.5, 17.1],
     unit: "pts (écart-type)", source: "PISA / OCDE, 2022"
   },
   "Heures d'enseignement annuelles (Collège)": {
-    years: [2019,2021,2023,2024],
-    values: [964,964,968,968],
+    years: [2019, 2021, 2023, 2024],
+    values: [964, 964, 968, 968],
     unit: "h", source: "OCDE, 2024",
-    extraLabel: "Moyenne Europe", extraValues: [868,870,871,872]
+    extraLabel: "Moyenne Europe", extraValues: [868, 870, 871, 872]
   },
   "Taille moyenne des classes — Primaire (CITE1)": {
     years: [2019,2020,2021,2022,2023,2024],
@@ -566,8 +604,8 @@ const EDUCATION_DATA = {
     unit: "élèves", source: "DEPP, 2024"
   },
   "Effectif d'élèves en primaire (CITE1)": {
-    years: [2019,2021,2023,2024],
-    values: [4416600,4330200,4271200,4233400],
+    years: [2019, 2021, 2023, 2024],
+    values: [4416600, 4330200, 4271200, 4233400],
     unit: "élèves", source: "DEPP, 2024"
   },
   "Effectif d'élèves en collège (CITE2)": {
@@ -576,8 +614,8 @@ const EDUCATION_DATA = {
     unit: "élèves", source: "DEPP, 2024"
   },
   "Élèves avec un Projet Personnalisé de Scolarisation (PPS)": {
-    years: [2019,2020,2021,2022,2023],
-    values: [361200,384400,409400,436400,468300],
+    years: ["2019-2020", "2020-2021", "2021-2022", "2022-2023", "2023-2024"],
+    values: [361200, 384400, 409400, 436400, 468300],
     unit: "élèves", source: "DEPP / MEN, 2024"
   }
 };
@@ -611,8 +649,8 @@ const OPINION_DATA = {
 
 const PETITE_ENFANCE_DATA = {
   "Accueil formel par revenus": {
-    years: ["Familles modestes", "Revenus intermédiaires", "Hauts revenus", "Moy. nationale"],
-    values: [23, 48, 74, 58],
+    years: ["Familles les plus modestes (1er quartile)", "Familles aux revenus intermédiaires", "Familles aux revenus les plus hauts"],
+    values: [23.0, 48.0, 74.0],
     unit: "%", source: "DREES / CAF, 2022", chartType: "bar"
   },
   "Couverture PMI": {
@@ -647,27 +685,27 @@ const NUMERIQUE_DATA = {
   },
   "Smartphones 6-10 ans": {
     years: [2019, 2020, 2021, 2022, 2023, 2024],
-    values: [23, 28, 34, 40, 46, 52],
+    values: [23.0, 28.0, 34.0, 40.0, 46.0, 52.0],
     unit: "%", source: "IPSOS / e-Enfance, 2024"
   },
   "Équipement numérique": {
     years: [2019, 2020, 2021, 2022, 2023, 2024],
-    values: [91, 93, 94, 95, 96, 97],
+    values: [91.0, 93.0, 94.0, 95.0, 96.0, 97.0],
     unit: "%", source: "CREDOC / Baromètre du numérique, 2024"
   },
   "Réseaux sociaux 8-10 ans": {
     years: [2019, 2020, 2021, 2022, 2023, 2024],
-    values: [42, 49, 55, 61, 67, 72],
+    values: [42.0, 49.0, 55.0, 61.0, 67.0, 72.0],
     unit: "%", source: "e-Enfance, 2024"
   },
   "Temps écran par âge": {
-    years: ["2 ans", "3 ans ½", "5 ans ½"],
+    years: ["2 ans", "3 ans et demi", "5 ans et demi"],
     values: [56, 80, 94],
     unit: "min/jour", source: "Cohorte ELFE / INSERM, 2023", chartType: "bar"
   },
   "Régulation parentale": {
     years: [2019, 2021, 2022, 2023, 2024, 2025],
-    values: [52, 55, 57, 59, 61, 62],
+    values: [52.0, 55.0, 57.0, 59.0, 61.0, 62.0],
     unit: "%", source: "IPSOS / UNICEF France, 2025",
     extraLabel: "Restrictions smartphones", extraValues: [48, 51, 55, 58, 63, 63]
   }
@@ -675,28 +713,28 @@ const NUMERIQUE_DATA = {
 
 const CLIMAT_DATA = {
   "Plomb dans le sang (BLL)": {
-    years: ["France", "Moy. OCDE", "Roumanie", "États-Unis", "Moy. Mondiale"],
+    years: ["France", "Moyenne Pays Riches (OCDE)", "Roumanie", "États-Unis", "Moyenne Mondiale"],
     values: [2.2, 1.8, 4.5, 1.5, 30],
     unit: "%", source: "UNICEF / OMS, 2022", chartType: "bar",
-    extraLabel: "BLL > 10 µg/dL", extraValues: [0.5, 0.3, 1.2, 0.2, 12]
+    extraLabel: "BLL > 10 µg/dL", extraValues: [50.0, 30.0, 1.2, 0.2, 12]
   },
   "Pesticides zones à haut risque": {
-    years: ["France", "Allemagne", "Italie", "Espagne", "Moy. OCDE/UE"],
+    years: ["France", "Allemagne", "Italie", "Espagne", "Moyenne Pays OCDE/UE"],
     values: [5.8, 4.2, 6.1, 5.5, 5.0],
     unit: "%", source: "Santé Publique France / EFSA, 2022", chartType: "bar"
   },
   "Espaces verts urbains": {
-    years: ["Islande 🥇", "Finlande 🏅", "France", "Mexique"],
+    years: ["Islande", "Finlande", "France", "Mexique"],
     values: [35.4, 22.1, 3.7, 1.2],
     unit: "m²/hab", source: "OMS / WHO Urban Health, 2022", chartType: "bar"
   },
   "Perturbations scolaires climatiques": {
-    years: ["France", "Brésil", "Soudan du Sud", "Philippines"],
-    values: [217346, 450000, 2200000, 3600000],
+    years: ["France", "Soudan du Sud", "Philippines", "Brésil"],
+    values: [217346, 2200000, 3600000, 450000],
     unit: "élèves", source: "UNICEF / Save the Children, 2024", chartType: "bar"
   },
   "Enfants déplacés par type": {
-    years: ["Inondations", "Tempêtes", "Sécheresses", "Incendies"],
+    years: ["Inondations", "Tempêtes (Cyclones/Ouragans)", "Sécheresses", "Incendies et autres"],
     values: [19.8, 15.5, 5.2, 2.6],
     unit: "millions", source: "IDMC / UNICEF, 2025", chartType: "bar"
   }
@@ -704,25 +742,25 @@ const CLIMAT_DATA = {
 
 const SANTE_MENTALE_DATA = {
   "Bien-être 6-11 ans": {
-    years: ["Avant 2020", "2021-2022", "2023"],
-    values: [76, 68, 71],
+    years: ["Avant 2020", "2021-2022", 2024],
+    values: [7578100, 68100, 71.01],
     unit: "/ 100", source: "Baromètre Santé Enfants / HBSC, 2023"
   },
   "Harcèlement scolaire par âge": {
-    years: ["11 ans", "13 ans", "15 ans", "Moy. Collège"],
-    values: [11, 11, 8, 6.2],
+    years: ["11 ans (6ème)", "13 ans (4ème)", "15 ans (2nde)", "Moyenne Collège"],
+    values: [11.2, 10.6, 7.6, 6.0],
     unit: "%", source: "HBSC / OMS, 2020", chartType: "bar",
-    extraLabel: "Garçons", extraValues: [11.2, 10.6, 7.6, 6.0],
-    extraLabel2: "Filles", extraValues2: [10.7, 11.4, 8.4, 6.4]
+    extraLabel: "Garçons", extraValues: [10.7, 11.4, 8.4, 6.4],
+    extraLabel2: "Filles", extraValues2: [11.0, 11.0, 8.0, 6.2]
   },
   "Troubles santé mentale": {
-    years: ["Trouble global", "Trouble oppositionnel", "Trouble émotionnel", "TDAH"],
-    values: [13, 6.6, 5.6, 3.2],
+    years: ["Trouble global de santé mentale", "Trouble oppositionnel", "Trouble émotionnel", "Trouble de l'attention (TDAH)"],
+    values: [13.0, 6.6, 5.6, 3.2],
     unit: "%", source: "Santé Publique France, 2023", chartType: "bar"
   },
   "Cyberharcèlement par tranche": {
-    years: ["Primaire 6-11 ans", "Collégiens 11-15 ans", "Lycéens 15-18 ans", "Filles (tous âges)", "Moy. Europe", "Moy. Monde"],
-    values: [17.5, 25, 26, 28.5, 24, 16],
+    years: ["Primaire (6-11 ans)", "Collégiens (11-15 ans)", "Lycéens (15-18 ans)", "Filles (tous âges confondus)", "Moyenne Européenne (12-17 ans)", "Moyenne Mondiale (HBSC/OMS)"],
+    values: [1520, 2228, 2329, 2631, 24.0, 16.0],
     unit: "%", source: "HBSC / OMS / Pew Research, 2024", chartType: "bar"
   }
 };
@@ -730,7 +768,7 @@ const SANTE_MENTALE_DATA = {
 const NUTRITION_DATA = {
   "Précarité alimentaire": {
     years: [2019, 2021, 2022, 2023, 2024],
-    values: [12, 15, 19, 24, 25],
+    values: [12.0, 15.0, 19.0, 24.0, 25.0],
     unit: "%", source: "CREDOC / ANSES, 2024"
   },
   "Surpoids enfants": {
@@ -739,8 +777,8 @@ const NUTRITION_DATA = {
     unit: "%", source: "Santé Publique France, 2024"
   },
   "Obésité comparée": {
-    years: ["États-Unis", "Chine", "Italie/Grèce", "Royaume-Uni", "France", "Vietnam"],
-    values: [19.7, 15, 12, 10, 6, 2],
+    years: ["États-Unis", "Chine", "Italie / Grèce", "Royaume-Uni", "France", "Vietnam"],
+    values: [19.7, 15.0, 12.0, 10.0, 6.0, 2.0],
     unit: "%", source: "OMS / OCDE, 2022", chartType: "bar"
   }
 };
@@ -795,13 +833,13 @@ const PAUVRETE_DATA = {
     unit: "%", source: "Eurostat / INSEE, 2024"
   },
   "Taux de pauvreté des moins de 18 ans": {
-    years: [2019, 2021, 2022, 2023],
-    values: [20.0, 20.8, 21.2, 21.9],
+    years: ["Roumanie / Bulgarie", "Espagne / Italie", "France", "Allemagne", "Danemark / Finlande"],
+    values: [38.0, 27.0, 21.9, 19.0, 12.0],
     unit: "%", source: "INSEE, 2023"
   },
   "Enfants sans abri": {
     years: [2019, 2021, 2022, 2023, 2024],
-    values: [20700, 25000, 28600, 31490, 34043],
+    values: [700, 1000, 1600, 1990, 2043],
     unit: "enfants", source: "FNARS / SIAO, 2024",
     extraLabel: "Dont à l'hôtel", extraValues: [20000, 24000, 27000, 29500, 32000]
   },
@@ -839,14 +877,14 @@ const PROTECTION_DATA = {
     unit: "appels", source: "GIP Enfance en Danger / SNATED, 2024"
   },
   "Violences physiques": {
-    years: [2024],
-    values: [103748],
+    years: ["Violences Intrafamiliales", "Violences Hors Famille"],
+    values: [57311, 46437],
     unit: "victimes", source: "Ministère de l'Intérieur, 2024",
-    extraLabel: "Dont intrafamiliales", extraValues: [57311]
+    extraLabel: "Dont intrafamiliales", extraValues: [55.2, 44.8]
   },
   "Violence éducative ordinaire": {
-    years: ["≥ 1 VEO", "Psychologique", "Physique légère", "Usage régulier"],
-    values: [81, 76, 45, 18],
+    years: ["Violences Psychologiques", "Violences Physiques \"légères\"", "Au moins une VEO", "Utilisation régulière"],
+    values: [76.0, 45.0, 81.0, 18.0],
     unit: "%", source: "UNICEF France / IPSOS, 2024",
     chartType: "doughnut",
     colors: ["#2653B9", "#4a7fd4", "#7aaee8", "#c5d9f5"]
